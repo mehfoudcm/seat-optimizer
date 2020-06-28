@@ -2,35 +2,34 @@
 
 README...
 
-Once python is installed
+Once python 3 is installed
 
 
 INSTALLS::
 
 pip install pandas
-
 pip install pulp
-
 pip install matplotlib
-
 pip install ast?
 
 
 
 from inside this folder run the following script but for the appropriate seat map file
+
 run ::
  python seat_optimizer.py "hurricanes_xy_coordinates.csv" 36 [2] [1] "section" 500 "not_normal"
 
-python - to run it in python
-seat_optimizer.py - seat_optimizer (program)
-"hurricanes_xy_coordinates.csv" - original seat map with 'section_label', 'row_label', 'seat_num', 'seat_center_x', 'seat_center_y', 'venuesid', 'seatsid' 
+* python - to run it in python
+* seat_optimizer.py - seat_optimizer (program)
+* "hurricanes_xy_coordinates.csv" - original seat map with 'section_label', 'row_label', 'seat_num', 'seat_center_x', 'seat_center_y', 'venuesid', 'seatsid' 
 					- seatsid = concatenation of venue, section, row, seat number
-36 - threshold (36 units based on KORE map is about 6 feet)
-[2] - array of seat cluster sizes, without more compute, one size should be chosen
-[1] - array of seat cluster percentages, 100% if one size chosen
-"section" - algorithm breakdown, optimized based on section is the preferred way
-500 - time limit for optimization, less time will only produce a feasible seat selection if optimization is too difficult (gap set to .01)
-"not_normal" - seat ordering, not_normal is typical, but some seats are ordered correctly in each row with no gaps
+					
+* 36 - threshold (36 units based on KORE map is about 6 feet)
+* [2] - array of seat cluster sizes, without more compute, one size should be chosen
+* [1] - array of seat cluster percentages, 100% if one size chosen
+* "section" - algorithm breakdown, optimized based on section is the preferred way
+* 500 - time limit for optimization, less time will only produce a feasible seat selection if optimization is too difficult (gap set to .01)
+* "not_normal" - seat ordering, not_normal is typical, but some seats are ordered correctly in each row with no gaps
 
 
 
