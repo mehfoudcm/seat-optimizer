@@ -16,12 +16,11 @@ pip install matplotlib
 pip install ast?
 
 
-
-from inside this folder run the following script but for the appropriate seat map file
-
 **RUN::**
+
+Then, from inside this folder run the following script but for the appropriate seat map file
  
- ``python seat_optimizer.py "hurricanes_xy_coordinates.csv" 36 [2] [1] "section" 500 "not_normal"``
+ ``python seat_optimizer.py "hurricanes_xy_sample.csv" 36 [2] [1] "section" 500 "not_normal"``
 
 * python - to run it in python
 * seat_optimizer.py - seat_optimizer (program)
