@@ -5,7 +5,7 @@ README...
 Once python 3 is installed
 
 
-*INSTALLS::*
+**INSTALLS::**
 
 pip install pandas
 
@@ -19,7 +19,7 @@ pip install ast?
 
 from inside this folder run the following script but for the appropriate seat map file
 
-*RUN::*
+**RUN::**
  
  ``python seat_optimizer.py "hurricanes_xy_coordinates.csv" 36 [2] [1] "section" 500 "not_normal"``
 
@@ -39,7 +39,11 @@ from inside this folder run the following script but for the appropriate seat ma
 
 
 
-*Run Process::*
+
+
+
+
+**Run Process::**
   
 - the algorithm first creates an appropriate seat map by breaking up rows where there are gaps 
 	- (this new map is saved under Row Adjusted Arena)
@@ -58,9 +62,12 @@ from inside this folder run the following script but for the appropriate seat ma
 
 
 
-to do maybe::
+**To Do::**
 		
 		
-	add list of already designated seats?
+	add list of already designated seats
+	
+	add weights for already established seats and maximize based off of weights (or amount paid, ratio of distance moved to amount paid)
+	
 
 if any questions feel free to reach out to christopherm@carolinahurricanes.com
