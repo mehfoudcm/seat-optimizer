@@ -5,7 +5,7 @@ README...
 Once python 3 is installed
 
 
-INSTALLS::
+*INSTALLS::*
 
 pip install pandas
 
@@ -19,14 +19,15 @@ pip install ast?
 
 from inside this folder run the following script but for the appropriate seat map file
 
-run ::
+*RUN::*
  
  ``python seat_optimizer.py "hurricanes_xy_coordinates.csv" 36 [2] [1] "section" 500 "not_normal"``
 
 * python - to run it in python
 * seat_optimizer.py - seat_optimizer (program)
 * "hurricanes_xy_coordinates.csv" - original seat map with 'section_label', 'row_label', 'seat_num', 'seat_center_x', 'seat_center_y', 'venuesid', 'seatsid' 
-					- seatsid = concatenation of venue, section, row, seat number
+	
+	- seatsid = concatenation of venue, section, row, seat number
 					
 * 36 - threshold (36 units based on KORE map is about 6 feet)
 * [2] - array of seat cluster sizes, without more compute, one size should be chosen
@@ -38,7 +39,7 @@ run ::
 
 
 
-while running:
+*Run Process::*
   
 - the algorithm first creates an appropriate seat map by breaking up rows where there are gaps 
 	- (this new map is saved under Row Adjusted Arena)
