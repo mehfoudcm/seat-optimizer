@@ -8,8 +8,11 @@ Once python 3 is installed
 INSTALLS::
 
 pip install pandas
+
 pip install pulp
+
 pip install matplotlib
+
 pip install ast?
 
 
@@ -17,7 +20,8 @@ pip install ast?
 from inside this folder run the following script but for the appropriate seat map file
 
 run ::
- python seat_optimizer.py "hurricanes_xy_coordinates.csv" 36 [2] [1] "section" 500 "not_normal"
+ 
+ ``python seat_optimizer.py "hurricanes_xy_coordinates.csv" 36 [2] [1] "section" 500 "not_normal"``
 
 * python - to run it in python
 * seat_optimizer.py - seat_optimizer (program)
