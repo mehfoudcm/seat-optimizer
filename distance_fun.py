@@ -6,6 +6,18 @@ import os
 from os import path
 from os import listdir
 
+"""
+This is the distance function used to create the distance array
+Runs the necessary (n^2)/2 calculations requested by clump_distance function
+
+possible for the function to hit errors if any of the coordinates are not integers or floats
+
+- looks through each x coordinate and y coordinate of the first cluster 
+  and then calculates the distance from each of the x,y points of the second cluster
+  
+- then from that list of distances, 
+    the minimum distance is then output as the distance between those two clusters
+"""
 
 def distance_fun(clump_df,i,j):
     dist_list = []
