@@ -9,15 +9,21 @@ from pulp import LpVariable, LpProblem, lpSum, LpMaximize, LpBinary, value
 import matplotlib.pyplot as plt
 from create_clumps import create_clumps
 
+"""
+for the purpose of setting up the clusters to be optimized, 
+breaking down the process of prepping the clusters so that the distance can be calculated
+"""
+
 
 def initialization(seat_map_df, group_label, clump_size_list, clump_ratio_list):
     
-    
+    # checks to see if there are more than one cluster sizes requested 
     if len(clump_size_list) == 1:
         use_clump_array = False
         clump_size = clump_size_list[0]
         
-   
+    # makes sure that the ratios of clusters requested adds up to one
+    # initially built to have a different factor in the algorithm, no longer used completely
     use_clump_ratio = []
     total = 0
     for perc in clump_ratio_list:
@@ -39,6 +45,7 @@ def initialization(seat_map_df, group_label, clump_size_list, clump_ratio_list):
         if file_name+".csv" in i:        
             clump_check_point = True
     
+    # if clusters exist, pull from dataframe/csv, else create the clusters
     if clump_check_point:   
         clump_df = pd.read_csv(full_file_name, converters={'seat_set': ast.literal_eval,
                                                            'x_coords': ast.literal_eval,
@@ -50,5 +57,5 @@ def initialization(seat_map_df, group_label, clump_size_list, clump_ratio_list):
         print("Seating Segments file not found, creating the file now")
         clump_df = create_clumps(seat_map_df, clump_size_list, group_label)
     
-
+    
     return clump_df, clump_size_list, use_clump_ratio
