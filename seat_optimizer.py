@@ -15,7 +15,23 @@ from run_optimization_aggregate import run_optimization_aggregate
 from linear_seat_creator import linear_seat_creator
 from return_statement_calc import return_statement_calc
 
+"""
+main function: finding the optimal seating capacity under social distancing constraints
+file_name ... needs to be input, and in the appropriate format: 
+      original seat map with 'section_label', 'row_label', 'seat_num', 'seat_center_x', 'seat_center_y', 'venuesid', 'seatsid' 
+threshold = 36... for the KORE map presented, 12 is the distance between seats, 36 is about 6 ft
+clump_size_list = [2]... the list of the size of clusters that you one
+clump_ratio_list = [1]... the list of the proportion of that size of cluster you want, must be lined up [2,4] [.8,.2] 80% 2, 20% 4 seat clusters
+algorithm_breakdown = 'section'... breakdown by what, section recommended, venue possible
+time_limit = 1200... how long do you want the optimization to run before it times out
+order_direction = 'normal'... are your seats normal or do you have weird number patterns or gaps ('not_normal')
+top_end_threshold = 150... helps in cutting down the optimization time, distance where you don't want seats to be considered
+#aisle_indicator = 'no_aisle_seats'... not built out or tested yet
+clump_size_determination = 'standard'... initially set up to configure the array (can be removed)
+seat_distance = 12 ... so that we can make sure seats are aligned in linear_seat_creator
+"""
 
+# sets defaults
 def reduced_capacity_seat_creator(file_name, 
                                   threshold = 36,
                                   clump_size_list = [2], 
@@ -41,19 +57,21 @@ def reduced_capacity_seat_creator(file_name,
     
     ## download the file for seat map
     full_seat_map_df = pd.read_csv(file_name)
+    # creates a more succinct label so that we can build 4 seat clusters
     full_seat_map_df['seatsid'] = full_seat_map_df['seatsid'].str.replace('-','')
 
-
+    # if seats are not normal, let's build normal seats
     if order_direction != 'normal':
         folder_name = "Row Adjusted Arena/"
         file_name = 'full_seat_map_enhanced_df'
         full_file_name = folder_name+file_name+'.csv'
         
+        # check to see if normal seats are already built
         seat_row_check_point = False
         for i in listdir(folder_name):
             if file_name+".csv" in i:
                 seat_row_check_point = True
-        
+        # if normal seats are not already built, create them using linear_seat_creator
         if seat_row_check_point:
             full_seat_map_df = pd.read_csv(full_file_name)
             print("Re-Row/Seat file found, pulled in")
@@ -65,6 +83,7 @@ def reduced_capacity_seat_creator(file_name,
     # remove if building piece by piece 
     full_seat_map_df['seat_ind'] = [0]*len(full_seat_map_df)
 
+    # determine which label to use to breakdown process
     print("Starting breakdown by "+algorithm_breakdown)
     if algorithm_breakdown == 'section':
         grouping = 'section_label'
@@ -74,6 +93,7 @@ def reduced_capacity_seat_creator(file_name,
     
     # create the list of groups
     group_list = full_seat_map_df[grouping].unique()
+    # prints the sections or groups that we'll optimize on, a reference point
     print(group_list)
  
     opt_times = ""
@@ -120,6 +140,7 @@ def reduced_capacity_seat_creator(file_name,
         file_name = 'group_label_'+group_label+'_opt_seats'
         full_file_name = folder_name+file_name+'.csv'
         
+        # checking to see if the optimized seats have already been created
         opt_check_point = False
         for i in listdir(folder_name):
             if file_name+".csv" in i:
@@ -139,7 +160,7 @@ def reduced_capacity_seat_creator(file_name,
         group_label_array = np.append(group_label_array, group_label)
         opt_time_array = np.append(opt_time_array, opt_time_num)
         
-        
+        # creating an output of the optimization times
         opt_times = opt_times + opt_time
         print("\n Current Optimization Times:\n"+opt_times+"\n")
         #clump_df_opt_group = optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label)
@@ -149,6 +170,8 @@ def reduced_capacity_seat_creator(file_name,
 
         print("\n\n\n  Nearly "+str(round(len(group_label_array)*100/len(group_list),2))+"% completed \n\n\n")
     
+    # creating the aggregation of the seat map and then outputting an optimization runtime dataframe 
+    # for studying and understanding the optimization timing
     print("Begin aggregation and map creation of all groupings")
     return_opt = return_statement_calc(full_seat_map_df, 'opt')
 
@@ -163,7 +186,7 @@ def reduced_capacity_seat_creator(file_name,
 
 
 
-
+# pulling in the arguments given to the command line or terminal command
 
 file_name = sys.argv[1]
 threshold = ast.literal_eval(sys.argv[2])
