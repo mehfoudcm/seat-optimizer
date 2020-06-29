@@ -108,13 +108,15 @@ def reduced_capacity_seat_creator(file_name,
         print("Creating seating segments now for ", group_label)
         group_seat_map_df = full_seat_map_df[full_seat_map_df[grouping] == group_label]
         group_label = str(group_label)
+        # initialization function creates the clusters after insuring that they exist
+        # creates the clump dataframe, or the real "list of seats"
+        # checking and then pulling seat clump dataframe
         clump_df, clump_size_list, use_clump_ratio = initialization(group_seat_map_df, group_label, clump_size_list, clump_ratio_list)
 
         total_seats = np.append(total_seats,len(clump_df))
             
         print("Checking for distances for ", group_label)
-        # creates the clump dataframe, or the real "list of seats"
-        # checking and then pulling seat clump dataframe
+        # creating the distances, could be another initialization type function TODO
         folder_name = "Distances/"
         file_name = 'group_label_'+group_label+'_dist'
         full_file_name = folder_name+file_name+'.csv'
@@ -123,7 +125,9 @@ def reduced_capacity_seat_creator(file_name,
         for i in listdir(folder_name):
             if file_name+".csv" in i:        
                 dist_check_point = True
-    
+            
+        # this is important, if the distances are already created, pull them, else create them, 
+        # this is a longer process
         if dist_check_point:   
             distance_df = pd.read_csv(full_file_name)
             distance_df.arc_set = distance_df.arc_set.apply(ast.literal_eval)
@@ -156,6 +160,7 @@ def reduced_capacity_seat_creator(file_name,
             print("Optimized Seats file not found, creating the file now")
             opt_time, opt_time_num, output_val, clump_df_opt_group = optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label, time_limit, top_end_threshold) #, aisle_indicator)
         
+        # creating the arrays for the calculations and presentations
         seats_filled = np.append(seats_filled, output_val)
         group_label_array = np.append(group_label_array, group_label)
         opt_time_array = np.append(opt_time_array, opt_time_num)
