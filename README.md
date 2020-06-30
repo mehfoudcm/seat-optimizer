@@ -69,4 +69,28 @@ Then, from inside this folder run the following script but for the appropriate s
 	add weights for already established seats and maximize based off of weights (or amount paid, ratio of distance moved to amount paid)
 	
 
+
+
+**Motivation:**
+
+We want to represent the seats in a stadium as a network, where the arcs represent the distance between seats or groups of seats. Based on network flow, we can understand a min cost problem, seen [here](https://en.wikipedia.org/wiki/Minimum-cost_flow_problem) and in many other places. 
+
+<img src="./Images/mcfp.png" width="800">
+
+Here, we want to take a network and do the opposite; maximize the nodes or arcs occupied. In other words, maximize the number of seats in the arena or stadium. There are other ways to solve this problem, but this is the path I've chosen to establish a mixed-integer linear program (Binary or zero-one; [MILP](https://en.wikipedia.org/wiki/Integer_programming)).
+
+<img src="./Images/maxflow.png" width="800">
+
+As follows, we can see a simple example, and how optimization can give us a larger value.
+
+<img src="./Images/example1.png" width="800">
+
+<img src="./Images/example2.png" width="800">
+
+In order to create this network and keep the linear relationship of program, we must first establish clusters. In this way, we establish the nodes of the network as clusters instead of seats.
+
+The network is then solved after we create it from the clusters (depending on cluster size). We can have different cluster sizes and different ratios of cluster sizes and that adds additional constraints to the problem.
+
+The solution typically sees 25-35% capacity depending on the arena, cluster size, and ratio.
+
 if any questions feel free to reach out to christopherm@carolinahurricanes.com
