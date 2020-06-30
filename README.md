@@ -1,11 +1,7 @@
 
-
-README...
+### **INSTALLS::**
 
 Once python 3 is installed
-
-
-**INSTALLS::**
 
 pip install pandas
 
@@ -16,7 +12,7 @@ pip install matplotlib
 pip install ast?
 
 
-**RUN::**
+### **RUN::**
 
 Then, from inside this folder run the following script but for the appropriate seat map file
  
@@ -42,7 +38,7 @@ Then, from inside this folder run the following script but for the appropriate s
 
 
 
-**Run Process::**
+### **Run Process::**
   
 - the algorithm first creates an appropriate seat map by breaking up rows where there are gaps 
 	- (this new map is saved under Row Adjusted Arena)
@@ -61,17 +57,18 @@ Then, from inside this folder run the following script but for the appropriate s
 
 
 
-**To Do::**
+### **To Do::**
 		
 		
 	add list of already designated seats
 	
-	add weights for already established seats and maximize based off of weights (or amount paid, ratio of distance moved to amount paid)
+	add weights for already established seats and maximize based off of weights 
+	(or amount paid, ratio of distance moved to amount paid)
 	
 
 
 
-**Motivation:**
+### **Motivation:**
 
 We want to represent the seats in a stadium as a network, where the arcs represent the distance between seats or groups of seats. Based on network flow, we can understand a min cost problem, seen [here](https://en.wikipedia.org/wiki/Minimum-cost_flow_problem) and in many other places. 
 
@@ -84,6 +81,8 @@ Here, we want to take a network and do the opposite; maximize the nodes or arcs 
 As follows, we can see a simple example, and how optimization can give us a larger value.
 
 <img src="./Images/example1.png" width="800">
+
+In the next example, you can see that you can increase the number of seats (or clusters) based on which seats (or clusters) are picked.
 
 <img src="./Images/example2.png" width="800">
 
