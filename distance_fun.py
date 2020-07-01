@@ -20,8 +20,8 @@ possible for the function to hit errors if any of the coordinates are not intege
 """
 
 def distance_fun(clump_df,i,j,top_end_threshold):
-    dist_list = []
-    for w in clump_df.x_coords[i]:
+	dist_list = []
+	for w in clump_df.x_coords[i]:
 		for x in clump_df.y_coords[i]:
 			for y in clump_df.x_coords[j]:
 				for z in clump_df.y_coords[j]:
