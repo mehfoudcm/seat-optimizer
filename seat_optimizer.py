@@ -134,7 +134,7 @@ def reduced_capacity_seat_creator(file_name,
             print("Distances file found, pulled in")
         else:
             print("Distances file not found, creating the file now")
-            distance_df = clump_distance(clump_df, group_label)
+            distance_df = clump_distance(clump_df, group_label, top_end_threshold)
         
         # RUNNING THE OPERATIONS TO PRODUCE THE SEATS 
         
