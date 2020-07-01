@@ -20,7 +20,7 @@ def linear_seat_creator(df, seat_distance):
 
     # creates a unique indicator so that seats can be sorted through the entire arena
     for i in range(len(full_seat_map_df_enhanced)):
-        full_seat_map_df_enhanced.unique_indicator[i] = str(full_seat_map_df_enhanced.section_label[i]) + str(full_seat_map_df_enhanced.row_label[i])
+        full_seat_map_df_enhanced.unique_indicator[i] = 's'+str(full_seat_map_df_enhanced.section_label[i])+'r'+str(full_seat_map_df_enhanced.row_label[i])
 
     # creates list of unique rows in the arena/stadium
     row_list = list(full_seat_map_df_enhanced.unique_indicator.unique())
