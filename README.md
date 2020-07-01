@@ -14,7 +14,11 @@ pip install ast?
 
 ### **RUN::**
 
-Then, from inside this folder run the following script but for the appropriate seat map file
+from ones preferred folder, with git installed  
+
+ ``git clone https://github.com/mehfoudcm/seat-optimizer.git``
+
+Then, from inside this folder (seat-optimizer) run the following script but for the appropriate seat map file
  
  ``python seat_optimizer.py "hurricanes_xy_sample.csv" 36 [2] [1] "section" 500 "not_normal"``
 
