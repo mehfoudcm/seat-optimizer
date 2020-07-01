@@ -16,7 +16,7 @@ For the purpose of taking the clumps or clusters of seats created and assigning 
 """
 
 
-def clump_distance(clump_df, group_label):
+def clump_distance(clump_df, group_label, top_end_threshold):
     tic_d = time.perf_counter() # timing the process
     
     # creating a distance matrix, that runs through the distance function
@@ -24,7 +24,7 @@ def clump_distance(clump_df, group_label):
     k = 0
     for i in range(len(clump_df)):
         for j in range(i):
-            dist_matrix[i,j] = distance_fun(clump_df,i,j)
+            dist_matrix[i,j] = distance_fun(clump_df,i,j,top_end_threshold)
             print("clump_distance for "+group_label+" is running", round(2*k/(len(clump_df)**2),3))
             k = k+1
     
