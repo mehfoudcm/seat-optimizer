@@ -59,7 +59,7 @@ def reduced_capacity_seat_creator(file_name,
     full_seat_map_df = pd.read_csv(file_name)
     # creates a more succinct label so that we can build 4 seat clusters
     #full_seat_map_df['seatsid'] = full_seat_map_df['seatsid'].str.replace('-','')
-    #full_seat_map_df['seatsid'] = full_seat_map_df['seatsid'].str[2:]
+    full_seat_map_df['seatsid'] = full_seat_map_df['seatsid'].str[2:]
 
     # if seats are not normal, let's build normal seats
     if order_direction != 'normal':
