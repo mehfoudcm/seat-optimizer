@@ -102,6 +102,12 @@ def reduced_capacity_seat_creator(file_name,
     opt_time_array = []
     total_seats = []
     seats_filled = []
+    
+    clump_size_for_df = []
+    for i in range(len(clump_size_list)):
+        clump_size_for_df.append("clusters of "+str(float(clump_size_list[i])))
+    final_size_df = pd.DataFrame(columns = clump_size_for_df)
+    
     # algorithm begins here, by segment established in the algorithm breakdown
     # default is section, so it will create a map, section by section
     for group_label in group_list:
@@ -155,16 +161,23 @@ def reduced_capacity_seat_creator(file_name,
             clump_df_opt_group = pd.read_csv(full_file_name)
             opt_time = str(group_label+ " optimization already handled\n")
             opt_time_num = 0
-            output_val = len(clump_df_opt_group[clump_df_opt_group.clump_ind == 1])
+            output_val = (clump_df_opt_group.clump_ind*clump_df_opt_group.clump_size).sum()
+            size_df = clump_df_opt_group[['clump_size', 'clump_ind']].groupby(['clump_size']).sum().unstack().reset_index()
+            size_df['clump_size'] = size_df['clump_size'].apply(lambda x: "clusters of "+str(x))
+            size_df = size_df.T.reset_index(drop=True).drop([0])
+            size_df.columns = size_df.iloc[0]
+            size_df = size_df.reset_index(drop=True).drop([0])
             print("Optimized Seats file found, pulled in")
         else:
             print("Optimized Seats file not found, creating the file now")
-            opt_time, opt_time_num, output_val, clump_df_opt_group = optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label, time_limit, top_end_threshold) #, aisle_indicator)
+            opt_time, opt_time_num, output_val, clump_df_opt_group, size_df = optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label, time_limit, top_end_threshold) #, aisle_indicator)
         
         # creating the arrays for the calculations and presentations
         seats_filled = np.append(seats_filled, output_val)
         group_label_array = np.append(group_label_array, group_label)
         opt_time_array = np.append(opt_time_array, opt_time_num)
+        final_size_df = final_size_df.append(size_df, ignore_index=True)
+        
         
         # creating an output of the optimization times
         opt_times = opt_times + opt_time
@@ -180,10 +193,10 @@ def reduced_capacity_seat_creator(file_name,
     # for studying and understanding the optimization timing
     print("Begin aggregation and map creation of all groupings")
     return_opt = return_statement_calc(full_seat_map_df, 'opt')
-
     runtime_df = pd.DataFrame({'group label': list(group_label_array), 'total seats': list(total_seats), 'seats filled': list(seats_filled)},
                             columns=['group label', 'total seats', 'seats filled'])
     runtime_df['opt_time'] = list(opt_time_array)
+    runtime_df = pd.concat([runtime_df, final_size_df], axis=1)
     runtime_df.to_csv('optimization_runtime.csv')
     toc = time.perf_counter()
     timing = f"... took {toc-tic:0.4f} seconds or {(toc-tic)/60:0.1f} minutes"
