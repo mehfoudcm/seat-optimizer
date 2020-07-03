@@ -224,6 +224,18 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
 
     clump_df['clump_ind'] = node_ind
     
+    clump_sum_df = clump_df[['clump_size', 'clump_ind']]
+    clump_sum_df = clump_sum_df.groupby(['clump_size']).sum().reset_index()
+    
+    # creating a size dataframe to understand the final clusters and final cluster ratios
+    clump_size_for_df = []
+    clump_amount_for_df = []
+    for i in range(len(clump_sum_df)):
+        clump_size_for_df.append("clusters of "+str(clump_sum_df.clump_size[i]))
+        clump_amount_for_df.append(clump_sum_df.clump_ind[i])
+        
+    size_df = pd.DataFrame([clump_amount_for_df], columns = clump_size_for_df)
+
     # saves the optimized seats to the Optimized Seats folder so that optimization does not have to run again
     group_item_name = 'group_label_'+group_label+'_opt_seats'
     clump_df.to_csv('Optimized Seats/'+group_item_name+'.csv')
@@ -235,4 +247,4 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
     opt_time = group_label+f" took {toc_o-tic_o:0.4f} seconds\n"
     print(f"Total Optimization for "+opt_time+f" or {(toc_o-tic_o)/60:0.1f} minutes with tolerance")
     
-    return opt_time, opt_time_num, output_val, clump_df
+    return opt_time, opt_time_num, output_val, clump_df, size_df
