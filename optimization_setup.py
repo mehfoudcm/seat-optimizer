@@ -16,7 +16,7 @@ taking the distances and clusters and creating the mixed integer linear program
 the output is the optimized seats per division
 """
 
-def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label, time_limit, top_end_threshold): # , aisle_indicator) #and add aisle indicator
+def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label, time_limit, top_end_threshold, aisle_indicator):
     tic_o = time.perf_counter()
     print("Deleting the single node loops")
     # removing the single node loops, so that optimization runs easier
@@ -31,6 +31,19 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
     distance_df = distance_df.reset_index(drop=True)
     toc_o_c = time.perf_counter()
     print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
+    
+    # removing the aisle nodes, as indicated by the user
+    if aisle_indicator == "no_aisle_seats":
+        print("Removing Aisle Seats")
+        delete_index = []
+        for i in range(len(clump_df)):
+            if clump_df.aisle_cluster[i] == 1:
+                delete_index.append(i)
+        clump_df = clump_df.drop(index=delete_index)
+        clump_df = clump_df.reset_index(drop=True)
+        toc_o_c = time.perf_counter()
+        print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
+                
     
     
     # where ratios are of interest, aka 20% 4 seat clusters 80% 2 seat clusters, these individual nodes need to be created
@@ -58,7 +71,7 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
     print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
     
     # TODO for aisles if that's something of interest
-    #if aisle_indicator == 'no_aisle_seats' or aisle_indicator == 'force_aisle_seats':
+    #if aisle_indicator == 'force_aisle_seats':
     #print("Creating the aisles")
     # create the standard node aisle indicators
     #aisles = dict(zip(clump_df.seatclumpid, clump_df.aisle_clump))
