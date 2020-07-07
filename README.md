@@ -20,7 +20,7 @@ from ones preferred folder, with git installed
 
 Then, from inside this folder (seat-optimizer) run the following script but for the appropriate seat map file
  
- ``python seat_optimizer.py "hurricanes_xy_sample.csv" 36 [2] [1] "section" 500 "not_normal"``
+ ``python seat_optimizer.py "hurricanes_xy_sample.csv" 36 [2] [1] "section" 500 "not_normal" "aisle_seats"``
 
 * python - to run it in python
 * seat_optimizer.py - seat_optimizer (program)
@@ -33,8 +33,8 @@ Then, from inside this folder (seat-optimizer) run the following script but for 
 * [1] - array of seat cluster percentages, 100% if one size chosen
 * "section" - algorithm breakdown, optimized based on section is the preferred way
 * 500 - time limit for optimization, less time will only produce a feasible seat selection if optimization is too difficult (gap set to .01)
-* "not_normal" - seat ordering, not_normal is typical, but some seats are ordered correctly in each row with no gaps
-
+* "not_normal" - seat ordering, not_normal is typical, but some seats are ordered correctly in each row with no gaps ("normal" does not run through the reordering process, and is fine for some arenas/stadiums)
+* "aisle_seats" - whether or not to use aisle seats... if you do not want to use aisle seats, the argument here would be "no_aisle_seats"
 
 
 
