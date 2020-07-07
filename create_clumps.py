@@ -33,29 +33,33 @@ def create_clumps(df, clump_size_list, group_label, order_direction = 'normal'):
                 # goes through the seats for each cluster size and creates clusters with the requested information
                 # saves the seatsid, and the x and y coordinates of all seats in the cluster (and section and row)
                 for j in range(min_seat,max_seat-(clump_size-1)+1):
-                    # add in indicator for aisle - TODO?
-                    #if j == min_seat or j == max_seat-(clump_size-1)+1:
-                        #aisle_clump = 1 # then add aisle_clump to append below
                     seat_set = []
                     seat_x_set = []
                     seat_y_set = []
                     seat_section = []
                     seat_row = []
+                    aisle_clump_ind = []
                     for k in range(0, clump_size):
+                        # adding the aisle indicator
+                        if j+k == min_seat or j+k == max_seat-(clump_size-1)+1:
+                            aisle_clump = 1
+                        else:
+                            aisle_clump = 0
                         try:
                             seat_set.append(row_df[row_df.seat_number == j+k].iloc[0]['seatsid'])
                             seat_x_set.append(row_df[row_df.seat_number == j+k].iloc[0]['seat_center_x'])
                             seat_y_set.append(row_df[row_df.seat_number == j+k].iloc[0]['seat_center_y'])
                             seat_section.append(group_label)
                             seat_row.append(i)
+                            aisle_clump_ind.append(aisle_clump)
                         except IndexError:
                             #print("reached the end of the row")
                             pass
-                    clumps.append([tuple(seat_set), list(seat_x_set), list(seat_y_set), tuple(seat_section), tuple(seat_row)])    
+                    clumps.append([tuple(seat_set), list(seat_x_set), list(seat_y_set), tuple(seat_section), tuple(seat_row), max(aisle_clump_ind)])
     
         # creates dataframe with the cluster information
         clump_set = clumps
-        clump_df = pd.DataFrame(clump_set, columns=['seat_set', 'x_coords','y_coords','section','row']) 
+        clump_df = pd.DataFrame(clump_set, columns=['seat_set', 'x_coords','y_coords','section','row', 'aisle_cluster'])
         
         # removes clusters that are not the requested size (I'm not sure this is necessary anymore; look into further)
         delete_index = []

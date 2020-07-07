@@ -39,8 +39,8 @@ def reduced_capacity_seat_creator(file_name,
                                   algorithm_breakdown = 'section',
                                   time_limit = 1200,
                                   order_direction = 'normal',
+                                  aisle_indicator = 'no_aisle_seats',
                                   top_end_threshold = 150,
-                                  #aisle_indicator = 'no_aisle_seats'
                                   clump_size_determination = 'standard',
                                   seat_distance = 12):
 
@@ -58,8 +58,9 @@ def reduced_capacity_seat_creator(file_name,
     ## download the file for seat map
     full_seat_map_df = pd.read_csv(file_name)
     # creates a more succinct label so that we can build 4 seat clusters
-    #full_seat_map_df['seatsid'] = full_seat_map_df['seatsid'].str.replace('-','')
     full_seat_map_df['seatsid'] = full_seat_map_df['seatsid'].str[2:]
+    #full_seat_map_df['seatsid'] = full_seat_map_df['seatsid'].str.replace('-','')
+      
 
     # if seats are not normal, let's build normal seats
     if order_direction != 'normal':
@@ -170,7 +171,7 @@ def reduced_capacity_seat_creator(file_name,
             print("Optimized Seats file found, pulled in")
         else:
             print("Optimized Seats file not found, creating the file now")
-            opt_time, opt_time_num, output_val, clump_df_opt_group, size_df = optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label, time_limit, top_end_threshold) #, aisle_indicator)
+            opt_time, opt_time_num, output_val, clump_df_opt_group, size_df = optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_ratio_list, group_label, time_limit, top_end_threshold, aisle_indicator)
         
         # creating the arrays for the calculations and presentations
         seats_filled = np.append(seats_filled, output_val)
@@ -214,8 +215,8 @@ clump_ratio_list = ast.literal_eval(sys.argv[4])
 algorithm_breakdown = sys.argv[5]
 time_limit = ast.literal_eval(sys.argv[6])
 order_direction = sys.argv[7]
-#aisle_indicator = sys.argv[8] # and add it below
+aisle_indicator = sys.argv[8]
 
 
 if __name__ == "__main__":
-    reduced_capacity_seat_creator(file_name, threshold, clump_size_list, clump_ratio_list, algorithm_breakdown, time_limit, order_direction)
+    reduced_capacity_seat_creator(file_name, threshold, clump_size_list, clump_ratio_list, algorithm_breakdown, time_limit, order_direction, aisle_indicator)
