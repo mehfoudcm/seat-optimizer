@@ -38,7 +38,7 @@ def create_clumps(df, clump_size_list, group_label, order_direction = 'normal'):
                     seat_y_set = []
                     seat_section = []
                     seat_row = []
-                    aisle_clump_ind = []
+                    aisle_clump_ind = [0] # defaults to a non-aisle cluster... seen when the index error is hit for gaps in row numbers
                     for k in range(0, clump_size):
                         # adding the aisle indicator
                         if j+k == min_seat or j+k == max_seat-(clump_size-1)+1:
