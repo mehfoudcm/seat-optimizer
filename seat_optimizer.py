@@ -121,7 +121,7 @@ def reduced_capacity_seat_creator(file_name,
         # checking and then pulling seat clump dataframe
         clump_df, clump_size_list, use_clump_ratio = initialization(group_seat_map_df, group_label, clump_size_list, clump_ratio_list)
 
-        total_seats = np.append(total_seats,len(clump_df))
+        total_seats = np.append(total_seats,len(clump_df)/len(clump_size_list))
             
         print("Checking for distances for ", group_label)
         # creating the distances, could be another initialization type function TODO
