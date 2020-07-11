@@ -200,6 +200,8 @@ def reduced_capacity_seat_creator(file_name,
     runtime_df['opt_time'] = list(opt_time_array)
     runtime_df = pd.concat([runtime_df, final_size_df], axis=1)
 
+    # running the check_seats function to output min distance between clusters (indicating feasibility) and also
+    # the average minimum distance for all of the clusters in group
     seat_check_df = check_seats()
     runtime_df = runtime_df.merge(seat_check_df, on = 'group label', how = 'left')
 
