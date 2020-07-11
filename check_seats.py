@@ -20,7 +20,7 @@ def check_seats():
     top_end_threshold = 1000
     
     # sets folder
-    optimized_seats = 'Optimized Seats\\'
+    optimized_seats = 'Optimized Seats/'
     group_label = []
     overall_min_distance = []
     overall_max_distance = []
