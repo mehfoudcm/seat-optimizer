@@ -29,7 +29,6 @@ def check_seats():
     # goes through the folder of optimized seats, to perform analysis on each group
     for spec_group in listdir(optimized_seats):
         if 'group_label_' in spec_group:
-            print(spec_group.replace('group_label_','').replace('_opt_seats.csv',''))
             group_label.append(spec_group.replace('group_label_','').replace('_opt_seats.csv',''))
     
     
