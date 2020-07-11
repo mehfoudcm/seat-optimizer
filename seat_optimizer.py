@@ -14,6 +14,7 @@ from clump_distance import clump_distance
 from run_optimization_aggregate import run_optimization_aggregate
 from linear_seat_creator import linear_seat_creator
 from return_statement_calc import return_statement_calc
+from check_seats import check_seats
 
 """
 main function: finding the optimal seating capacity under social distancing constraints
@@ -198,6 +199,10 @@ def reduced_capacity_seat_creator(file_name,
                             columns=['group label', 'total seats', 'seats filled'])
     runtime_df['opt_time'] = list(opt_time_array)
     runtime_df = pd.concat([runtime_df, final_size_df], axis=1)
+
+    seat_check_df = check_seats()
+    runtime_df = runtime_df.merge(seat_check_df, on = 'group label', how = 'left')
+
     runtime_df.to_csv('optimization_runtime.csv')
     toc = time.perf_counter()
     timing = f"... took {toc-tic:0.4f} seconds or {(toc-tic)/60:0.1f} minutes"
