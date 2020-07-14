@@ -44,19 +44,25 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
         toc_o_c = time.perf_counter()
         print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
                 
+    busy_string = '1-'+group_label
+    def cut_variable_strings(variable_list):
+        if type(variable_list[0]) is tuple:
+            return [tuple([item.replace(busy_string,'').replace('-','') for item in tuple_item]) for tuple_item in variable_list]
+        else:
+            return [item.replace(busy_string,'').replace('-','') for item in variable_list]
     
     
     # where ratios are of interest, aka 20% 4 seat clusters 80% 2 seat clusters, these individual nodes need to be created
     print("Creating specific nodes for ratios")
     if len(clump_ratio_list) >= 2:
-        nodesA = clump_df[clump_df.clump_size == clump_size_list[0]].seatclumpid.tolist()
-        nodesB = clump_df[clump_df.clump_size == clump_size_list[1]].seatclumpid.tolist()
+        nodesA = cut_variable_strings(clump_df[clump_df.clump_size == clump_size_list[0]].seatclumpid.tolist())
+        nodesB = cut_variable_strings(clump_df[clump_df.clump_size == clump_size_list[1]].seatclumpid.tolist())
         BAratio = clump_ratio_list[1]/clump_ratio_list[0]
     if len(clump_ratio_list) >= 3:
-        nodesC = clump_df[clump_df.clump_size == clump_size_list[2]].seatclumpid.tolist()
+        nodesC = cut_variable_strings(clump_df[clump_df.clump_size == clump_size_list[2]].seatclumpid.tolist())
         CBratio = clump_ratio_list[2]/clump_ratio_list[1]
     if len(clump_ratio_list) >= 4:
-        nodesD = clump_df[clump_df.clump_size == clump_size_list[3]].seatclumpid.tolist()
+        nodesD = cut_variable_strings(clump_df[clump_df.clump_size == clump_size_list[3]].seatclumpid.tolist())
         DCratio = clump_ratio_list[3]/clump_ratio_list[2]
     if len(clump_ratio_list) >= 5:
         print("optimization method only set up for 4 types of seat clumps and even that can be ridiculous to optimize against")
@@ -67,6 +73,7 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
     print("Creating standard nodes")
     # create the standard list of nodes (seat clumps)
     nodes = clump_df.seatclumpid.tolist()
+    nodes = cut_variable_strings(nodes)
     toc_o_c = time.perf_counter()
     print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
     
@@ -81,8 +88,7 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
     
     print("Creating the dictionary for nodes")
     # create a dictionary for those nodes and their value (clump size)
-    # their value is not currently set up in a list, this might need to change DELETE IF NOT?
-    sizes = dict(zip(clump_df.seatclumpid, clump_df.clump_size))
+    sizes = dict(zip(nodes, clump_df.clump_size))
     toc_o_c = time.perf_counter()
     print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
     
@@ -91,13 +97,14 @@ def optimization_setup(distance_df, clump_df, threshold, clump_size_list, clump_
     # create a set of nodes to represent arcs (tuple)
     # turn arc set into list
     arcs = distance_df.arc_set.tolist()
+    arcs = cut_variable_strings(arcs)
     toc_o_c = time.perf_counter()
     print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
     
     
     print("Creating the dictionary for arcs")
     # create a dictionary of those sets with distances
-    dists = dict(zip(distance_df.arc_set, distance_df.dist))
+    dists = dict(zip(arcs, distance_df.dist))
     toc_o_c = time.perf_counter()
     print(f"... {toc_o_c-tic_o:0.4f} seconds have elapsed")
     
