@@ -77,7 +77,7 @@ def create_clumps(df, clump_size_list, group_label, order_direction = 'normal'):
         for i in range(len(clump_df)):
             clump_id = ''
             for j in range(clump_size):
-                clump_id = clump_id + clump_df.seat_set[i][j]
+                clump_id = clump_id + clump_df.seat_set[i][j] + '-'
             clump_df.seatclumpid[i] = clump_id + str(clump_size)
         clump_df.seatclumpid2 = clump_df.seatclumpid
     
