@@ -28,7 +28,7 @@ Then, from inside this folder (seat-optimizer) run the following script but for 
 	
 	- seatsid = concatenation of venue, section, row, seat number
 					
-* 36 - threshold (36 units based on KORE map is about 6 feet)
+* 36 - threshold (36 units based on KORE map is about 6 feet); this measure is experimental and should be adjusted based on your own concerns and guidelines given by authorities
 * [2] - array of seat cluster sizes, without more compute, one size should be chosen
 * [1] - array of seat cluster percentages, 100% if one size chosen
 * "section" - algorithm breakdown, optimized based on section is the preferred way
