@@ -96,4 +96,4 @@ The network is then solved after we create it from the clusters (depending on cl
 
 The solution typically sees 25-35% capacity depending on the arena, cluster size, and ratio.
 
-if any questions feel free to reach out to christopherm@carolinahurricanes.com
+if any questions feel free to reach out to mehfoudcm@vcu.edu
